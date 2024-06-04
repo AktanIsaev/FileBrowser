@@ -10,3 +10,4 @@ public:
 };
 
 #endif // GROUP_BY_TYPE_H
+

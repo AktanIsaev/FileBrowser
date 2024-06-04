@@ -1,5 +1,4 @@
 #include "group_by_type.h"
-#include "item_info.h"
 #include <QDir>
 #include <QDirIterator>
 #include <QHash>

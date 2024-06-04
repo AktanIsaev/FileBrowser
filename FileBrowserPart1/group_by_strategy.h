@@ -13,3 +13,4 @@ public:
 };
 
 #endif // GROUP_BY_STRATEGY_H
+

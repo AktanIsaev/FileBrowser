@@ -1,7 +1,6 @@
 #include <QCoreApplication>
 #include <QTextStream>
 #include <memory>
-#include <iomanip>
 #include "group_by_folder.h"
 #include "group_by_type.h"
 
@@ -28,7 +27,15 @@ void PrintExample(QTextStream &out, const std::unique_ptr<GroupByStrategy> &stra
 
 void PrintExamples(QTextStream &out, const std::unique_ptr<GroupByStrategy> &strategy)
 {
-    PrintExample(out, strategy, "C:/Users/Aktan/Desktop/1/");
+    PrintExample(out, strategy, "C:/Users/Aktan/Desktop/test/X/");
+    PrintExample(out, strategy, "C:/Users/Aktan/Desktop/test/1/");
+    PrintExample(out, strategy, "C:/Users/Aktan/Desktop/test/2/");
+    PrintExample(out, strategy, "C:/Users/Aktan/Desktop/test/3/");
+    PrintExample(out, strategy, "C:/Users/Aktan/Desktop/test/4/");
+    PrintExample(out, strategy, "C:/Users/Aktan/Desktop/test/5/");
+    PrintExample(out, strategy, "C:/Users/Aktan/Desktop/test/6/");
+    PrintExample(out, strategy, "C:/Users/Aktan/Desktop/test/7/");
+    PrintExample(out, strategy, "C:/Users/Aktan/Desktop/test/8/");
 }
 
 int main(int argc, char *argv[])

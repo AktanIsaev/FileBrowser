@@ -10,3 +10,4 @@ public:
 };
 
 #endif // GROUP_BY_FOLDER_H
+

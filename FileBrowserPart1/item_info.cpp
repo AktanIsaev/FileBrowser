@@ -9,11 +9,14 @@ ItemInfo::ItemInfo(const QString &name, qint64 size, qint64 totalSize)
 
 QString ItemInfo::percentage() const
 {
-    qreal ratio = (qreal)size_ / totalSize_;
+    if (totalSize_ == 0)
+        return "0.00 %";
+
+    qreal ratio = static_cast<qreal>(size_) / totalSize_;
     if (ratio == 0)
         return "0.00 %";
     if (ratio < 0.01)
         return "< 0.01 %";
-    return QString::number(floor(ratio * 10000) / 100, 'f', 2) + " %";
+    return QString::number(std::floor(ratio * 10000) / 100, 'f', 2) + " %";
 }
 
