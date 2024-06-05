@@ -6,6 +6,13 @@
 QList<ItemInfo> GroupByFolder::Explore(const QString &path) const
 {
     QDir directory(path);
+
+    // Проверка существования директории
+    if (!directory.exists())
+    {
+        throw std::runtime_error("Directory does not exist: " + path.toStdString());
+    }
+
     QList<ItemInfo> itemList;
 
     qint64 totalSize = 0;
