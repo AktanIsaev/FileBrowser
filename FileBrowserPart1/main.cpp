@@ -1,18 +1,20 @@
-#include <QCoreApplication>
-#include <QTextStream>
-
-#include "context.h"
-#include "group_by_folder.h"
-#include "group_by_type.h"
-#include "print_helpers.h"
+#include <QCoreApplication>  // Для основного приложения Qt
+#include <QTextStream>  // Для работы с текстовыми потоками
+#include <iostream>  // Для стандартного ввода-вывода
+#include <vector>  // Для работы с векторами
+#include "context.h"  // Заголовочный файл класса Context
+#include "group_by_folder.h"  // Заголовочный файл класса GroupByFolder
+#include "group_by_type.h"  // Заголовочный файл класса GroupByType
+#include "print_helpers.h"  // Заголовочный файл функций печати и вывода
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication app(argc, argv);  // Создание объекта приложения Qt
-    QTextStream cout(stdout);          // Создание текстового потока, связанного со стандартным выводом (консолью)
+    QCoreApplication app(argc, argv);  // Инициализация приложения Qt
+    QTextStream cout(stdout);  // Создание текстового потока для вывода в консоль
 
-    // Список путей к тестовым директориям
+    // Список путей к директориям, которые необходимо исследовать
     std::vector<QString> paths = {
+        "C:/Users/Aktan/Desktop/test/X/",
         "C:/Users/Aktan/Desktop/test/1/",
         "C:/Users/Aktan/Desktop/test/2/",
         "C:/Users/Aktan/Desktop/test/3/",
@@ -24,26 +26,23 @@ int main(int argc, char *argv[])
         "C:/Users/Aktan/Desktop/test/9/"
     };
 
-    // Создание объекта Context с начальной стратегией группировки по папкам
+    // Создание контекста с начальной стратегией группировки по папкам
     Context context(std::make_unique<GroupByFolder>());
 
-    // Вывод заголовка для группировки по папкам
-    cout << "Grouping by Folder:" << Qt::endl;
+    cout << "Grouping by Folder:" << Qt::endl;  // Вывод сообщения о начале группировки по папкам
+    for (const auto &path : paths)  // Перебор всех путей
+    {
+        exploreAndPrint(cout, context, path);  // Исследование и вывод результатов для каждого пути
+    }
 
-    // Вызов метода exploreAndPrint для вывода информации о содержимом директорий
-    // с использованием стратегии группировки по папкам
-    context.exploreAndPrint(cout, paths);
-
-    // Смена стратегии на группировку по типам файлов
+    // Смена стратегии на группировку по типу файлов
     context.setStrategy(std::make_unique<GroupByType>());
 
-    // Вывод заголовка для группировки по типам файлов
-    cout << "Grouping by Type:" << Qt::endl;
+    cout << "Grouping by Type:" << Qt::endl;  // Вывод сообщения о начале группировки по типу файлов
+    for (const auto &path : paths)  // Перебор всех путей
+    {
+        exploreAndPrint(cout, context, path);  // Исследование и вывод результатов для каждого пути
+    }
 
-    // Вызов метода exploreAndPrint для вывода информации о содержимом директорий
-    // с использованием стратегии группировки по типам файлов
-    context.exploreAndPrint(cout, paths);
-
-    // Запуск главного цикла обработки событий приложения
-    return app.exec();
+    return app.exec();  // Запуск цикла обработки событий Qt
 }

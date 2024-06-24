@@ -1,5 +1,6 @@
-#include "print_helpers.h"
-#include <cmath>
+#include "print_helpers.h"  // Подключаем заголовочный файл с объявлением функций
+#include <cmath>            // Подключаем заголовочный файл cmath для работы с математическими функциями
+#include <stdexcept>        // Подключаем заголовочный файл stdexcept для работы с исключениями
 
 // Функция для форматирования размера в удобочитаемый вид (байты, КБ, МБ и т.д.)
 QString formatSize(qint64 size)
@@ -33,11 +34,29 @@ void Print(QTextStream &out, const QList<ItemInfo> &itemList)
     {
         // Вывод имени файла, выровненного по левому краю
         out << "  " << item.name().leftJustified(50, ' ');
-        qint64 size = item.size();  // Получаем размер файла
-        QString sizeString = formatSize(size);  // Форматируем размер в удобочитаемый вид
-        out << sizeString.leftJustified(15, ' ');  // Выводим размер, выровненный по левому краю
+        QString sizeString = formatSize(item.size());  // Форматируем размер в удобочитаемый вид
+        out << sizeString.leftJustified(15, ' ');      // Выводим размер, выровненный по левому краю
         out << item.percentage().rightJustified(10, ' ') << Qt::endl;  // Выводим процент, выровненный по правому краю
     }
 
     out << Qt::endl;  // Пустая строка в конце вывода
+}
+
+// Функция для обработки исключений, вызова метода explore и вывода результатов
+void exploreAndPrint(QTextStream &out, Context &context, const QString &path)
+{
+    // Вывод сообщения о начале исследования директории
+    out << "Exploring directory: " << path << Qt::endl;
+    try
+    {
+        // Попытка исследовать директорию с использованием заданного контекста
+        QList<ItemInfo> itemList = context.explore(path);
+        // Вывод результатов исследования
+        Print(out, itemList);
+    }
+    catch (const std::runtime_error &error)
+    {
+        // В случае возникновения ошибки, выводим сообщение об ошибке
+        out << "Error: " << error.what() << Qt::endl;
+    }
 }
